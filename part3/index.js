@@ -27,6 +27,11 @@ let persons = [
 
 app.use(express.json())
 
+const generatedId = () => {
+    const idGenerated = Math.floor(Math.random() * 10000) + 1;
+    return idGenerated;
+}
+
 app.get('/', (req, res) => {
     res.send('<h1>Welcome to the page</h1>');
 });
@@ -41,6 +46,33 @@ app.get('/info', (req, res) => {
 app.get('/api/persons', (req, res) => {
     res.json(persons);
 });
+
+app.post('/api/persons', (req, res) => {
+    const body = req.body;
+    
+    if(!body.name){
+        return res.status(400).json({
+            error: 'name missing'
+        });
+    }
+
+    if(!body.number){
+        return res.status(400).json({
+            error: 'number missing'
+        });
+    }
+ 
+
+    const person = {
+        id: generatedId(),
+        name: body.name,
+        number: body.number
+    };
+
+    persons = persons.concat(person);
+
+    res.json(person);
+})
 
 app.get('/api/persons/:id', (req, res) => {
     const id = parseInt(req.params.id);
@@ -65,3 +97,4 @@ app.delete('/api/persons/:id', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Listening port ${PORT}`);
 })
+
