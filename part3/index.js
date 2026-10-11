@@ -31,6 +31,13 @@ app.get('/', (req, res) => {
     res.send('<h1>Welcome to the page</h1>');
 });
 
+app.get('/info', (req, res) => {
+    const totalPerson = persons.length;
+    const currenTime = new Date();
+    res.send(`<p>Phoneboos has info for ${totalPerson} people</p>
+              <p>${currenTime}</p>`)
+})
+
 app.get('/api/persons', (req, res) => {
     res.json(persons);
 });
