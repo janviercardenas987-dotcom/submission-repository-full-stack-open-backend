@@ -55,6 +55,13 @@ app.get('/api/persons/:id', (req, res) => {
     }
 })
 
+app.delete('/api/persons/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    persons = persons.filter(person => person.id !== id);
+    return res.status(204).end();
+});
+
+
 app.listen(PORT, () => {
-    console.log(`Listening port ${PORT}`)
+    console.log(`Listening port ${PORT}`);
 })
