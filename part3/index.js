@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 const PORT = 3001;
 
 let persons = [
@@ -25,7 +26,9 @@ let persons = [
     }
 ];
 
-app.use(express.json())
+app.use(express.json());
+app.use(morgan('tiny'));
+morgan.token('type', function(req, res){return req.headers['content-type']});
 
 const generatedId = () => {
     const idGenerated = Math.floor(Math.random() * 10000) + 1;
@@ -96,4 +99,3 @@ app.delete('/api/persons/:id', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Listening port ${PORT}`);
 })
-
