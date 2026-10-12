@@ -27,8 +27,8 @@ let persons = [
 ];
 
 app.use(express.json());
-app.use(morgan('tiny'));
-morgan.token('type', function(req, res){return req.headers['content-type']});
+morgan.token('json', function(req){return JSON.stringify(req.body)})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json'));
 
 const generatedId = () => {
     const idGenerated = Math.floor(Math.random() * 10000) + 1;
